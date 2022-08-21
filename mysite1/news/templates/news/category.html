@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category }} - {{ block.super }}{% endblock %}
+
+{% block sidebar %}{% include 'inc/_sidebar.html' %}{% endblock %}
+
+{% block content %}
+    {% for new in news %}
+        <div class="mx-auto">
+            <div class="card text-center mb-3">
+                <div class="card-header">
+                    Категория: {{ new.category }}
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        {% if new.image %}
+                            <img style="max-height: 300px; max-width: 600px; width: auto; height: auto" src="../media/{{ new.image }}" alt="" width="350" class="mr-3">
+                        {% endif %}
+                        <div class="media-body">
+                            <h3 class="card-title">{{ new.title }}</h3>
+                            <p class="card-text">{{ new.content|safe|linebreaks|truncatewords:50 }}</p>
+                            <a href="{{ new.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ new.created_at|timesince }}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <h2>Не удалось найти новостей из данной категори😞</h2>
+    {% endfor %}
+{% endblock %}
+

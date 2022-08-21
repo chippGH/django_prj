@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news_item.title }}{% endblock %}
+
+{% block sidebar %}{% include 'inc/_sidebar.html' %}{% endblock %}
+
+{% block content %}
+    <div class="mx-auto">
+        <div class="card text-center mb-3">
+            <div class="card-header">
+                Категория: <a href="{{ object.category.get_absolute_url }}">{{ object.category }}</a>
+            </div>
+            <div class="card-body">
+                {% if object.image %}
+                    <img style="max-height: 300px; max-width: 600px; width: auto; height: auto"
+                         src="../media/{{ object.image }}" alt="" class="float-left mr-3">
+                {% endif %}
+                <h3 class="card-title">{{ object.title }}</h3>
+                <p class="card-text">{{ object.content|safe|linebreaks }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                {{ object.created_at|timesince }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
